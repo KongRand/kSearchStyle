@@ -23,6 +23,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self buildSearchView];
     [self buildSearchTableView];
+    
 }
 
 - (void)buildSearchView
