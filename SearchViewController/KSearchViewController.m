@@ -23,7 +23,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self buildSearchView];
     [self buildSearchTableView];
-    
 }
 
 - (void)buildSearchView
@@ -36,6 +35,7 @@
 - (void)buildSearchTableView
 {
     self.searchTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64) style:UITableViewStylePlain];
+    self.searchTableView.backgroundColor = [UIColor magentaColor];
     self.searchTableView.delegate = self;
     self.searchTableView.dataSource = self;
     [self.searchTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"searchTableViewCellID"];
@@ -57,8 +57,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchTableViewCellID"];
-    
+    UITableViewCell *cell    = [tableView dequeueReusableCellWithIdentifier:@"searchTableViewCellID"];
+    cell.textLabel.text      = @"搜索数据";
+    cell.textLabel.textColor = [UIColor grayColor];
     return cell;
 }
 @end

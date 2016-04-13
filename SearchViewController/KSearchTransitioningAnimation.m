@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) SearchView *searchView;
 
+@property (nonatomic, strong) UITableView *searchTableView;
+
 @property (nonatomic, strong) UIButton *searchButton;
 
 @end
@@ -47,7 +49,10 @@
         if ([obj isKindOfClass:[SearchView class]]) {
             weakSelf.searchView = obj;
         }
-    }];
+        if ([obj isKindOfClass:[UITableView class]]) {
+            weakSelf.searchTableView = obj;
+        }
+     }];
     [fromViewController.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[UIButton class]]) {
             weakSelf.searchButton = obj;
@@ -59,19 +64,16 @@
     CGFloat searchButtonWidth    = self.searchButton.frame.size.width;
     CGFloat searchButtonHeight   = self.searchButton.frame.size.height;
     CGFloat dValueButtonWH       = searchButtonWidth - searchButtonHeight/2;
-    CGRect centerRect = CGRectMake(dValueButtonWH, self.searchButton.frame.origin.y, searchButtonHeight, searchButtonHeight);
+    CGRect centerRect = CGRectMake(searchButtonHeight, self.searchButton.frame.origin.y, searchButtonHeight, searchButtonHeight);
     
     UIBezierPath *fromBezierPath = [UIBezierPath bezierPathWithOvalInRect:centerRect];
-    
     CGFloat radiusWidth = [UIScreen mainScreen].bounds.size.width - dValueButtonWH;
     CGFloat radiusHeight = self.searchButton.frame.origin.y + searchButtonHeight/2;
     CGFloat radius = sqrt(radiusWidth * radiusWidth + radiusHeight * radiusWidth);
     UIBezierPath *toBezierPath   = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(centerRect, -radius, -radius)];
-    
     CAShapeLayer *shaperLayer = [CAShapeLayer layer];
     shaperLayer.path          = toBezierPath.CGPath;
     self.searchView.layer.mask = shaperLayer;
-    
     CABasicAnimation *basicAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
     basicAnimation.fromValue         = (__bridge id _Nullable)(fromBezierPath.CGPath);
     basicAnimation.toValue           = (__bridge id _Nullable)(toBezierPath.CGPath);
@@ -106,7 +108,7 @@
     CGFloat searchButtonWidth    = self.searchButton.frame.size.width;
     CGFloat searchButtonHeight   = self.searchButton.frame.size.height;
     CGFloat dValueButtonWH       = searchButtonWidth - searchButtonHeight/2;
-    CGRect centerRect = CGRectMake(searchButtonWidth - searchButtonHeight, self.searchButton.frame.origin.y, searchButtonHeight, searchButtonHeight);
+    CGRect centerRect = CGRectMake(0, self.searchButton.frame.origin.y, searchButtonHeight, searchButtonHeight);
     
     UIBezierPath *fromBezierPath = [UIBezierPath bezierPathWithOvalInRect:centerRect];
     
